@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    volumes:
+      - ./api:/api
+    command: python3 main.py
+    environment:
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=devdb
+      - POSTGRES_HOST=postgres-db
+  postgres-db:
+    image: postgres:16.1-alpine
+    environment:
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=devdb
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devuser -d postgres"]
+      interval: 1s
+      timeout: 1s
+      retries: 5
+
+volumes:
+  postgres-data:
