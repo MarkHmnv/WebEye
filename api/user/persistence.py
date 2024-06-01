@@ -1,6 +1,6 @@
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from api.database import Model
+from api.core.database import Model
 from api.monitoring.persistence import WebsiteMonitor
 
 

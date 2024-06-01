@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped
 
-from api.database import Model
+from api.core.database import Model
 
 
 class WebsiteMonitor(Model):

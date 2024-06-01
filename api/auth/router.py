@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.auth.schemas import TokenResponse
 from api.auth.utils import encode_jwt
-from api.database import get_db
+from api.core.database import get_db
 from api.user import crud
 from api.user.schemas import CreateUser, LoginUser
 

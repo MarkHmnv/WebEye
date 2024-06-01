@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.auth.dependencies import get_auth_user
-from api.database import get_db
+from api.core.database import get_db
 from api.user import crud
 from api.user.persistence import User
 from api.user.schemas import UserProfile, UpdateUserPartial
