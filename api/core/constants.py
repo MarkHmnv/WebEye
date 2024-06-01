@@ -1,0 +1,2 @@
+WEBSITE_KEY = 'website_hash'
+MSE_THRESHOLD = 10
