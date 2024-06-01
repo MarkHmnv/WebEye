@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.auth.dependencies import get_auth_user
-from api.database import get_db
+from api.core.database import get_db
 from api.monitoring import crud
 from api.monitoring.schemas import WebsiteMonitorCreate, WebsiteMonitorResponse
 from api.user.persistence import User
@@ -13,7 +13,7 @@ monitoring_router = APIRouter(
 )
 
 
-@monitoring_router.post('', status_code=status.HTTP_201_CREATED)
+@monitoring_router.post('', response_model=WebsiteMonitorResponse, status_code=status.HTTP_201_CREATED)
 async def create_monitoring(
         monitoring: WebsiteMonitorCreate,
         auth_user: User = Depends(get_auth_user),
@@ -24,7 +24,9 @@ async def create_monitoring(
             status_code=status.HTTP_409_CONFLICT,
             detail='This website is already monitored by you',
         )
-    await crud.add(monitoring, auth_user, session)
+    website_monitor = await crud.add(monitoring, auth_user, session)
+    crud.add_monitoring_to_scheduler(website_monitor)
+    return website_monitor
 
 
 @monitoring_router.get('', response_model=list[WebsiteMonitorResponse])
@@ -46,3 +48,4 @@ async def delete_monitoring(
             detail='You do not monitor this website',
         )
     await crud.delete(website_monitor, session)
+    crud.delete_monitoring_from_scheduler(website_monitor)

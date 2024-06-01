@@ -5,6 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from api.user.persistence import User
 from api.user.schemas import CreateUser, UpdateUserPartial
 
+import api.monitoring.crud as monitoring_crud
+
 
 async def add(user: CreateUser, session: AsyncSession) -> User:
     dump = user.model_dump()
@@ -44,6 +46,9 @@ async def update_user(
 
 
 async def delete(user_to_delete: User, session: AsyncSession):
+    monitors = await monitoring_crud.find_all_by_user_id(user_to_delete.id, session)
+    for monitor in monitors:
+        monitoring_crud.delete_monitoring_from_scheduler(monitor)
     await session.delete(user_to_delete)
     await session.flush()
     await session.commit()

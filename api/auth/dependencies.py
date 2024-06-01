@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.auth.utils import decode_jwt
-from api.database import get_db
+from api.core.database import get_db
 from api.user import crud
 from api.user.persistence import User
 

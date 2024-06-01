@@ -1,16 +1,13 @@
-import os
 from typing import AsyncGenerator
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, declared_attr
 
-POSTGRES_USER = os.getenv('POSTGRES_USER', 'devuser')
-POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'changeme')
-POSTGRES_DB = os.getenv('POSTGRES_DB', 'devdb')
-POSTGRES_HOST = os.getenv('POSTGRES_HOST', 'localhost')
-DATABASE_URL = f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:5432/{POSTGRES_DB}'
-engine = create_async_engine(DATABASE_URL, echo=True)
+from api.core import config
+
+DATABASE_URL = f'postgresql+asyncpg://{config.postgres_user}:{config.postgres_password}@{config.postgres_host}:5432/{config.postgres_db}'
+engine = create_async_engine(DATABASE_URL, echo=False)
 factory = async_sessionmaker(engine, autoflush=False, autocommit=False, expire_on_commit=False)
 
 
