@@ -8,3 +8,8 @@ postgres_host = os.getenv('POSTGRES_HOST', 'localhost')
 redis_host = os.getenv('REDIS_HOST', 'localhost')
 redis_port = os.getenv('REDIS_PORT', '6379')
 redis_password = os.getenv('REDIS_PASSWORD', 'changeme')
+
+smtp_host = os.getenv('SMTP_HOST', 'localhost')
+smtp_port = os.getenv('SMTP_PORT', '587')
+smtp_user = os.getenv('SMTP_USER', 'devuser')
+smtp_password = os.getenv('SMTP_PASSWORD', 'changeme')

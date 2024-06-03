@@ -11,7 +11,6 @@ RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r requirements.txt && \
     apk add --no-cache supervisor chromium chromium-chromedriver && \
-    rm -rf /var/cache/apk/* && \
     adduser \
         --disabled-password \
         --no-create-home \

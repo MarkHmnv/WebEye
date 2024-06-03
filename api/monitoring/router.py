@@ -25,7 +25,14 @@ async def create_monitoring(
             detail='This website is already monitored by you',
         )
     website_monitor = await crud.add(monitoring, auth_user, session)
-    crud.add_monitoring_to_scheduler(website_monitor)
+    crud.add_monitoring_to_scheduler.delay(
+        url=website_monitor.url,
+        website_id=website_monitor.id,
+        interval_minutes=website_monitor.interval_minutes,
+        user_id=auth_user.id,
+        username=auth_user.name,
+        email=auth_user.email
+    )
     return website_monitor
 
 
