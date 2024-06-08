@@ -14,7 +14,7 @@ from api.user.persistence import User
 
 
 async def add(monitoring: WebsiteMonitorCreate, user: User, session: AsyncSession) -> WebsiteMonitor:
-    monitor = WebsiteMonitor(**monitoring.dict(), user_id=user.id)
+    monitor = WebsiteMonitor(**monitoring.model_dump(), user_id=user.id)
     session.add(monitor)
     await session.flush()
     await session.commit()
@@ -79,14 +79,17 @@ def add_monitoring_to_scheduler(
             url, website_id, user_id,
             username, email, width, height
         ],
-        schedule=timedelta(minutes=interval_minutes),
+        schedule=timedelta(seconds=interval_minutes),
         app=celery_app
     ).save()
 
 
 def delete_monitoring_from_scheduler(website_monitor: WebsiteMonitor):
-    RedBeatSchedulerEntry.from_key(
-        key=f'redbeat:monitor_{website_monitor.id}_{website_monitor.user_id}',
-        app=celery_app
-    ).delete()
-    rd.hdel(WEBSITE_KEY, f'{website_monitor.id}_{website_monitor.user_id}')
+    try:
+        RedBeatSchedulerEntry.from_key(
+            key=f'redbeat:monitor_{website_monitor.id}_{website_monitor.user_id}',
+            app=celery_app
+        ).delete()
+        rd.hdel(WEBSITE_KEY, f'{website_monitor.id}_{website_monitor.user_id}')
+    except KeyError:
+        pass
