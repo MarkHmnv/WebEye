@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+import datetime as dt
 
 import jwt
 
@@ -15,8 +15,8 @@ def encode_jwt(
         expire_minutes: int = 60
 ) -> str:
     to_encode = payload.copy()
-    now = datetime.utcnow()
-    expire = now + timedelta(minutes=expire_minutes)
+    now = dt.datetime.now(dt.UTC)
+    expire = now + dt.timedelta(minutes=expire_minutes)
     to_encode.update(iat=now, exp=expire)
     return jwt.encode(to_encode, private_key, algorithm=algorithm)
 
