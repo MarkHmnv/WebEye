@@ -38,7 +38,7 @@ async def update_user(
         updated_user: UpdateUserPartial,
         session: AsyncSession
 ) -> User:
-    for name, value in updated_user.model_dump(exclude_unset=True).items():
+    for name, value in updated_user.model_dump(exclude_none=True).items():
         setattr(user_to_update, name, value)
     await session.flush()
     await session.commit()
