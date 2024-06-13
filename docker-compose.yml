@@ -27,6 +27,16 @@ services:
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
 
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/client
+      - node_modules:/client/node_modules
+    command: npm run dev
+
   postgres-db:
     image: postgres:16.1-alpine
     environment:
@@ -60,3 +70,4 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  node_modules:
