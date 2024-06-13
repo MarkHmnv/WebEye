@@ -9,7 +9,7 @@ from sqlalchemy import NullPool
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from api.auth.utils import encode_jwt
+from api.auth.utils import create_access_token
 from api.core import config
 from api.core.database import Model, get_db
 from api.main import app
@@ -53,8 +53,7 @@ async def create_auth_user(name: str = 'test', email: str = 'test@test.com') -> 
     async with factory() as session:
         user = CreateUser(name=name, email=email, password='test12345')
         user = await user_crud.add(user, session)
-        payload = dict(sub=user.id, name=user.name)
-        access_token = encode_jwt(payload)
+        access_token = create_access_token(user.id, user.name)
         return user, access_token
 
 
