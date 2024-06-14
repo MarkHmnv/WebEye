@@ -8,7 +8,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Link from "../shared/Link.jsx";
-import {HOME, PROFILE, SIGNUP} from "../../util/routes.js";
+import {PROFILE, SIGNUP} from "../../util/routes.js";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {setCredentials, useLoginMutation} from "../../redux/slices/authSlice.js";
