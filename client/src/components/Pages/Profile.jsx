@@ -59,7 +59,7 @@ const Profile = () => {
 
     return (
         <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant="h4" component="h1" gutterBottom align="center">
+            <Typography variant="h4" gutterBottom>
                 User Profile
             </Typography>
             <Box
