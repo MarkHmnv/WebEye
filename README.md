@@ -44,9 +44,17 @@ This project is a notification system that allows users to subscribe to notifica
 
 3. **Run the application**:
 
-     ```bash
-     docker-compose up --build
-     ```
+    For development purposes, use the default `docker-compose.yml`:
+
+    ```bash
+    docker-compose up --build
+    ```
+
+    For production deployment, use `docker-compose.prod.yml`:
+
+    ```bash
+    docker-compose -f docker-compose.prod.yml up --build
+    ```
 
 ## API Endpoints
 

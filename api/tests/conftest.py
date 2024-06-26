@@ -20,7 +20,7 @@ from api.user import crud as user_crud
 from api.user.persistence import User
 from api.user.schemas import CreateUser
 
-DATABASE_URL = f'postgresql+asyncpg://{config.postgres_user}:{config.postgres_password}@{config.postgres_host}:5432/test_db'
+DATABASE_URL = f'postgresql+asyncpg://{config.postgres_user}:{config.postgres_password}@{config.postgres_host}:5432/webeye_test_db'
 engine = create_async_engine(DATABASE_URL, poolclass=NullPool)
 factory = async_sessionmaker(engine, autoflush=False, autocommit=False, expire_on_commit=False)
 

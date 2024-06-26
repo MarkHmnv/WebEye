@@ -22,3 +22,5 @@ ENV PATH="/py/bin:$PATH"
 ENV PYTHONPATH "${PYTHONPATH}:/"
 
 USER fastapi-user
+
+CMD ["/usr/bin/supervisord"]
